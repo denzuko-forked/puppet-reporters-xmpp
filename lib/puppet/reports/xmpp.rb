@@ -1,5 +1,5 @@
-require 'puppet'
 require_relative 'reporter'
+require 'puppet'
 
 Puppet::Reports.register_report(:xmpp) do
   
