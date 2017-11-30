@@ -1,4 +1,4 @@
-name 'puppet-xmpp'
+name 'reporters-xmpp'
 version '0.1.0'
 license 'Apache 2.0'
 summary 'A Puppet report handler for sending notifications of failed runs to Jabber/XMPP'
