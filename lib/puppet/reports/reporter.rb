@@ -2,19 +2,22 @@ require 'hiera'
 require 'puppet'
 
 begin
-  require 'hiera'
   require 'xmpp4r/client'
-  include Jabber
+
 rescue LoadError => e
   Puppet.info "You need the `xmpp4r` gem to use the XMPP report"
 end
 
 class Reporter
   attr_accessor :client, :config, :description
+  
+  include Jabber
 
   def initialize()
+    @hiera = Hiera.new
+    
     self.description = "Send notification of failed reports to an XMPP user."
-    self.config = Hiera::lookup('reports::xmpp', {
+    self.config = @hiera.lookup('reporters::xmpp', {
       :server      => '',
       :user        => '',
       :secret      => '',
@@ -23,7 +26,7 @@ class Reporter
     })
     self.client = nil
   end
-  public:
+
   def target
     "#{self.config[:target]}@#{self.config[:server]}"
   end
@@ -33,7 +36,7 @@ class Reporter
   end
   
   def connect!
-    self.client = Client::new JID::NEW(self.jid)
+    self.client = Client::new JID::new(self.jid)
     self.client.connect
     self.client.auth config[:secret]
   end
@@ -41,4 +44,12 @@ class Reporter
   def environment?(env)
     self.config[:environment].include?(env) or self.config[:environment] == :ALL
   end
+  
+  def send!(subject, body, type = :normal, *id)
+    self.client.send Message::new(self.target, body)
+                              .set_type(type)
+                              .set_id(id or '1')
+                              .set_subject(subject)
+  end
+  
 end
