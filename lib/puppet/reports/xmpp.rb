@@ -14,7 +14,7 @@ Puppet::Reports.register_report(:xmpp) do
     
     @reporter.connect!
     @reporter.client.send! "Puppet run failed!",
-      "Puppet run for #{self.host} #{self.status} at #{Time.now.asctime}",
-      :normal
+      "Puppet run for #{self.host} #{self.status} at #{Time.now.asctime}"
+    
   end
 end
