@@ -1,5 +1,5 @@
 {
-  "name": "denzuko-xmpp",
+  "name": "denzuko-reporters-xmpp",
   "version": "0.1.0",
   "author": "Denzuko",
   "summary": "A Puppet report processor that announces failed runs to a Jabber-XMPP user",
