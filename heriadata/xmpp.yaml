@@ -1,0 +1,6 @@
+---
+:server: '[Slack-teamname].xmpp.slack.com'
+:user: 'puppetbot'
+:secret: 'mysecret'
+:target: 'redleader'
+:environment: 'ALL'
